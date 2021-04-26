@@ -4,19 +4,19 @@ sudo setenforce 0
 removeOrdererCA(){
 
 	echo "Removing Ordere CA"
-	docker-compose -f ./orderer/docker-compose-ca-orderer.yaml  down -v 
+	docker-compose -f ./orderer/ca-orderer.yaml  down -v 
 
 }
 removeOrg1CA(){
 
 	echo "Removing Org1 CA"
-	docker-compose -f ./org1/docker-compose-ca-org1.yaml down -v  
+	docker-compose -f ./org1/ca-org1.yaml down -v  
 
 }
 removeOrg2CA(){
 
 	echo "Removing Org2 CA"
-	docker-compose -f ./org2/docker-compose-ca-org2.yaml  down -v
+	docker-compose -f ./org2/ca-org2.yaml  down -v
 
 }
 
