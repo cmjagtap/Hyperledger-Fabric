@@ -5,21 +5,20 @@ sudo setenforce 0
 setupOrdererCA(){
 
 	echo "Setting Orderer CA"
-	docker-compose -f docker-compose-ca-orderer.yaml  up -d
+	docker-compose -f ./orderer/docker-compose-ca-orderer.yaml  up -d
 }
 
 setupOrg1CA(){
 	echo "Setting Org1 CA"
-	docker-compose -f docker-compose-ca-org1.yaml up -d 
+	docker-compose -f ./org1/docker-compose-ca-org1.yaml up -d 
 }
 
 setupOrg2CA(){
 	echo "Setting Org2 CA"
-	docker-compose -f docker-compose-ca-org2.yaml  up -d
+	docker-compose -f ./org2/docker-compose-ca-org2.yaml  up -d
 }
 
 setupOrdererCA
-sleep 10
 setupOrg1CA
-sleep 10
 setupOrg2CA
+docker ps -a
