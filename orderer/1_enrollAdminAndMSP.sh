@@ -1,6 +1,11 @@
-  mkdir -p crypto-config-ca/ordererOrganizations/orderertest.in
-  export FABRIC_CA_CLIENT_HOME=${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in
+setupOrdererCA(){
 
+	echo "Setting Orderer CA"
+	docker-compose -f ca-orderer.yaml  up -d
+	sleep 10
+	 mkdir -p crypto-config-ca/ordererOrganizations/example.com
+ 	 export FABRIC_CA_CLIENT_HOME=${PWD}/crypto-config-ca/ordererOrganizations/example.com
+}
 enrollCAAdmin()
 {
   echo
@@ -25,7 +30,7 @@ nodeOrgnisationUnit()
     OrganizationalUnitIdentifier: admin
   OrdererOUIdentifier:
     Certificate: cacerts/localhost-9054-ca-orderer.pem
-    OrganizationalUnitIdentifier: orderer' >${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/msp/config.yaml
+    OrganizationalUnitIdentifier: orderer' >${PWD}/crypto-config-ca/ordererOrganizations/example.com/msp/config.yaml
   sleep 2
 }
 registerUsers()
@@ -58,41 +63,41 @@ registerUsers()
   fabric-ca-client register --caname ca-orderer --id.name ordererAdmin --id.secret ordererAdminpw --id.type admin --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
   sleep 2
 
-  mkdir -p crypto-config-ca/ordererOrganizations/orderertest.in/orderers
+  mkdir -p crypto-config-ca/ordererOrganizations/example.com/orderers
 
 }
 orderer1MSP()
 {
 
-  mkdir -p crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer.in
+  mkdir -p crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com
 
   echo
   echo "## Generate the orderer msp"
   echo
 
-  fabric-ca-client enroll -u https://orderer:ordererpw@localhost:9054 --caname ca-orderer -M ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer.in/msp --csr.hosts orderer.in --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
+  fabric-ca-client enroll -u https://orderer:ordererpw@localhost:9054 --caname ca-orderer -M ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/msp --csr.hosts orderer.example.com --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
 
   sleep 2
 
-  cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/msp/config.yaml ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer.in/msp/config.yaml
+  cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/msp/config.yaml ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/msp/config.yaml
 
   echo
   echo "## Generate the orderer-tls certificates"
   echo
 
-  fabric-ca-client enroll -u https://orderer:ordererpw@localhost:9054 --caname ca-orderer -M ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer.in/tls --enrollment.profile tls --csr.hosts orderer.in --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
+  fabric-ca-client enroll -u https://orderer:ordererpw@localhost:9054 --caname ca-orderer -M ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/tls --enrollment.profile tls --csr.hosts orderer.example.com --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
 
   sleep 2
 
-  cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer.in/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer.in/tls/ca.crt
-  cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer.in/tls/signcerts/* ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer.in/tls/server.crt
-  cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer.in/tls/keystore/* ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer.in/tls/server.key
+  cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt
+  cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/tls/signcerts/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+  cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/tls/keystore/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.key
 
-  mkdir ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer.in/msp/tlscacerts
-  cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer.in/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer.in/msp/tlscacerts/tlsca.orderertest.in-cert.pem
+  mkdir ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts
+  cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
-  mkdir ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/msp/tlscacerts
-  cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer.in/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/msp/tlscacerts/tlsca.orderertest.in-cert.pem
+  mkdir ${PWD}/crypto-config-ca/ordererOrganizations/example.com/msp/tlscacerts
+  cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
 }
 orderer2MSP()
@@ -100,80 +105,81 @@ orderer2MSP()
   # -----------------------------------------------------------------------
   #  Orderer 2
 
-  mkdir -p crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer2.in
+  mkdir -p crypto-config-ca/ordererOrganizations/example.com/orderers/orderer2.example.com
 
   echo
   echo "## Generate the orderer msp"
   echo
 
-  fabric-ca-client enroll -u https://orderer2:ordererpw@localhost:9054 --caname ca-orderer -M ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer2.in/msp --csr.hosts orderer2.in --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
+  fabric-ca-client enroll -u https://orderer2:ordererpw@localhost:9054 --caname ca-orderer -M ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer2.example.com/msp --csr.hosts orderer2.example.com --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
   sleep 2
 
-  cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/msp/config.yaml ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer2.in/msp/config.yaml
+  cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/msp/config.yaml ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer2.example.com/msp/config.yaml
 
   echo
   echo "## Generate the orderer-tls certificates"
   echo
 
-  fabric-ca-client enroll -u https://orderer2:ordererpw@localhost:9054 --caname ca-orderer -M ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer2.in/tls --enrollment.profile tls --csr.hosts orderer2.in --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
+  fabric-ca-client enroll -u https://orderer2:ordererpw@localhost:9054 --caname ca-orderer -M ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer2.example.com/tls --enrollment.profile tls --csr.hosts orderer2.example.com --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
 
   sleep 2
-  cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer2.in/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer2.in/tls/ca.crt
-  cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer2.in/tls/signcerts/* ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer2.in/tls/server.crt
-  cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer2.in/tls/keystore/* ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer2.in/tls/server.key
+  cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/ca.crt
+  cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/signcerts/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.crt
+  cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/keystore/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.key
 
-  mkdir ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer2.in/msp/tlscacerts
-  cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer2.in/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer2.in/msp/tlscacerts/tlsca.orderertest.in-cert.pem
+  mkdir ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer2.example.com/msp/tlscacerts
+  cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer2.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
-  # mkdir ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/msp/tlscacerts
-  # cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer2.in/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/msp/tlscacerts/tlsca.orderertest.in-cert.pem
+  # mkdir ${PWD}/crypto-config-ca/ordererOrganizations/example.com/msp/tlscacerts
+  # cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
 }
 orderer3MSP()
 {
  # ---------------------------------------------------------------------------
   #  Orderer 3
-  mkdir -p crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer3.in
+  mkdir -p crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com
 
   echo
   echo "## Generate the orderer msp"
   echo
 
-  fabric-ca-client enroll -u https://orderer3:ordererpw@localhost:9054 --caname ca-orderer -M ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer3.in/msp --csr.hosts orderer3.in --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
+  fabric-ca-client enroll -u https://orderer3:ordererpw@localhost:9054 --caname ca-orderer -M ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/msp --csr.hosts orderer3.example.com --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
 
   sleep  2
-  cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/msp/config.yaml ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer3.in/msp/config.yaml
+  cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/msp/config.yaml ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/msp/config.yaml
 
   echo
   echo "## Generate the orderer-tls certificates"
   echo
 
-  fabric-ca-client enroll -u https://orderer3:ordererpw@localhost:9054 --caname ca-orderer -M ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer3.in/tls --enrollment.profile tls --csr.hosts orderer3.in --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
+  fabric-ca-client enroll -u https://orderer3:ordererpw@localhost:9054 --caname ca-orderer -M ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/tls --enrollment.profile tls --csr.hosts orderer3.example.com --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
 
  sleep 2
-  cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer3.in/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer3.in/tls/ca.crt
-  cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer3.in/tls/signcerts/* ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer3.in/tls/server.crt
-  cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer3.in/tls/keystore/* ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer3.in/tls/server.key
+  cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/ca.crt
+  cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/signcerts/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
+  cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/keystore/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.key
 
-  mkdir ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer3.in/msp/tlscacerts
-  cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer3.in/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/orderers/orderer3.in/msp/tlscacerts/tlsca.orderertest.in-cert.pem
+  mkdir ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/msp/tlscacerts
+  cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
 }
 adminMSP()
 {
-  mkdir -p crypto-config-ca/ordererOrganizations/orderertest.in/users
-  mkdir -p crypto-config-ca/ordererOrganizations/orderertest.in/users/Admin@orderertest.in
+  mkdir -p crypto-config-ca/ordererOrganizations/example.com/users
+  mkdir -p crypto-config-ca/ordererOrganizations/example.com/users/Admin@example.com
 
   echo
   echo "## Generate the admin msp"
   echo
 
-  fabric-ca-client enroll -u https://ordererAdmin:ordererAdminpw@localhost:9054 --caname ca-orderer -M ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/users/Admin@orderertest.in/msp --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
+  fabric-ca-client enroll -u https://ordererAdmin:ordererAdminpw@localhost:9054 --caname ca-orderer -M ${PWD}/crypto-config-ca/ordererOrganizations/example.com/users/Admin@example.com/msp --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
 
   sleep 2
-  cp ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/msp/config.yaml ${PWD}/crypto-config-ca/ordererOrganizations/orderertest.in/users/Admin@orderertest.in/msp/config.yaml
+  cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/msp/config.yaml ${PWD}/crypto-config-ca/ordererOrganizations/example.com/users/Admin@example.com/msp/config.yaml
 
 }
+setupOrdererCA
 enrollCAAdmin
 nodeOrgnisationUnit
 registerUsers

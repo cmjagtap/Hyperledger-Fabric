@@ -1,6 +1,12 @@
-  mkdir -p /crypto-config-ca/peerOrganizations/org2.example.com/
-  export FABRIC_CA_CLIENT_HOME=${PWD}/crypto-config-ca/peerOrganizations/org2.example.com/
 
+setupOrg2CA(){
+	echo "Setting Org2 CA"
+	docker-compose -f ca-org2.yaml  up -d
+
+	sleep 10	
+	 mkdir -p /crypto-config-ca/peerOrganizations/org2.example.com/
+ 	 export FABRIC_CA_CLIENT_HOME=${PWD}/crypto-config-ca/peerOrganizations/org2.example.com/
+}
 createCertificatOrg2()
 {
         echo "Enroll the CA admin"
@@ -56,9 +62,9 @@ registerUsers()
   fabric-ca-client register --caname ca.org2.example.com --id.name org2admin --id.secret org2adminpw --id.type admin --tls.certfiles ${PWD}/fabric-ca/org2/tls-cert.pem
 
 }
+setupOrg2CA
 createCertificatOrg2
 sleep 2
 nodeOrgUnits
 sleep 2
 registerUsers
-

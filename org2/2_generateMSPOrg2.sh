@@ -87,4 +87,5 @@ createMSPPeer0
 createMSPPeer1
 generateUserMSP
 generateAdminMSP
-
+docker-compose -f docker-compose-peer.yaml up -d
+docker ps -a

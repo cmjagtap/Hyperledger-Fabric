@@ -1,5 +1,13 @@
-mkdir -p crypto-config-ca/peerOrganizations/org1.example.com/
-export FABRIC_CA_CLIENT_HOME=${PWD}/crypto-config-ca/peerOrganizations/org1.example.com/
+
+setupOrg1CA(){
+
+	echo "Setting Org1 CA"
+	docker-compose -f ca-org1.yaml up -d 
+
+	sleep 10
+	mkdir -p crypto-config-ca/peerOrganizations/org1.example.com/
+	export FABRIC_CA_CLIENT_HOME=${PWD}/crypto-config-ca/peerOrganizations/org1.example.com/
+}
 
 #here we are generating crypto material insted of cryptogen we are using CA
 createcertificatesForOrg1() {
@@ -50,6 +58,7 @@ registerUsers()
   echo
   fabric-ca-client register --caname ca.org1.example.com --id.name org1admin --id.secret org1adminpw --id.type admin --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
 }
+setupOrg1CA
 createcertificatesForOrg1
 sleep 2
 nodeOrgnisationUnit
