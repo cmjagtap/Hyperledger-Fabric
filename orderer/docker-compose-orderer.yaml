@@ -7,7 +7,7 @@ services:
 
   orderer.example.com:
     container_name: orderer.example.com
-    image: hyperledger/fabric-orderer:2.1
+    image: hyperledger/fabric-orderer:2.3.2
     dns_search: .
     environment:
       - ORDERER_GENERAL_LOGLEVEL=info
@@ -43,7 +43,7 @@ services:
 
   orderer2.example.com:
     container_name: orderer2.example.com
-    image: hyperledger/fabric-orderer:2.1
+    image: hyperledger/fabric-orderer:2.3.2
     dns_search: .
     environment:
       - ORDERER_GENERAL_LOGLEVEL=info
@@ -78,7 +78,7 @@ services:
 
   orderer3.example.com:
     container_name: orderer3.example.com
-    image: hyperledger/fabric-orderer:2.1
+    image: hyperledger/fabric-orderer:2.3.2
     dns_search: .
     environment:
       - ORDERER_GENERAL_LOGLEVEL=info
