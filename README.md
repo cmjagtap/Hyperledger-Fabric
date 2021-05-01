@@ -16,4 +16,4 @@ Monitoring using Grafana, Prometheus and REST APIS.
 
 
 #### Setup 
-- Follow this article to setup network.
+- Follow this [article](https://cmjagtap.medium.com/hyperledger-fabric-blockchain-setup-from-scratch-21890e26aac7) to setup network.
