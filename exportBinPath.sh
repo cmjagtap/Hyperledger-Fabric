@@ -1,2 +1,0 @@
-export PATH=${PWD}/bin:$PATH
-
