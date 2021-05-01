@@ -4,7 +4,7 @@ networks:
   test:
 
 services:
-  couchdb0:
+  couchdb2:
     container_name: couchdb2
     image: hyperledger/fabric-couchdb
     environment:
@@ -15,7 +15,7 @@ services:
     networks:
       - test
 
-  couchdb1:
+  couchdb3:
     container_name: couchdb3
     image: hyperledger/fabric-couchdb
     environment:
