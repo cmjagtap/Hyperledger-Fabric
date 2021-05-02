@@ -4,8 +4,8 @@
         "client": {
                 "tlsEnable": true,
                 "adminCredential": {
-                        "id": "admin",
-                        "password": "adminpw"
+                        "id": "exploreradmin",
+                        "password": "explorerpw"
                 },
                 "caCredential": {
                         "id": "admin",
@@ -61,7 +61,7 @@
         },
         "orderers": {
                 "orderer.example.com": {
-                        "url": "grpcs://127.0.0.1:7050",
+                        "url": "grpcs://172.18.0.14:7050",
                         "grpcOptions": {
                                 "ssl-target-name-override": "orderer.example.com",
                                 "hostnameOverride": "orderer.example.com"
@@ -71,7 +71,7 @@
                         }
                 },
                 "orderer2.example.com": {
-                        "url": "grpcs://127.0.0.1:8050",
+                        "url": "grpcs://172.18.0.13:8050",
                         "grpcOptions": {
                                 "ssl-target-name-override": "orderer2.example.com"
 
@@ -81,7 +81,7 @@
                         }
                 },
                 "orderer3.example.com": {
-                        "url": "grpcs://127.0.0.1:9050",
+                        "url": "grpcs://172.18.0.15:9050",
                         "grpcOptions": {
                                 "ssl-target-name-override": "orderer3.example.com"
                         },
@@ -95,7 +95,7 @@
                         "tlsCACerts": {
                                 "path": "/tmp/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
                         },
-                        "url": "grpcs://127.0.0.1:7051",
+                        "url": "grpcs://172.18.0.6:7051",
                         "grpcOptions": {
                                 "ssl-target-name-override": "peer0.org1.example.com"
                         }
@@ -104,7 +104,7 @@
                         "tlsCACerts": {
                                 "path": "/tmp/crypto/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt"
                         },
-                        "url": "grpcs://127.0.0.1:8051",
+                        "url": "grpcs://172.18.0.5:8051",
                         "grpcOptions": {
                                 "ssl-target-name-override": "peer1.org1.example.com"
                         }
@@ -113,7 +113,7 @@
                         "tlsCACerts": {
                                 "path": "/tmp/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt"
                         },
-                        "url": "grpcs://127.0.0.1:9051",
+                        "url": "grpcs://172.18.0.10:9051",
                         "grpcOptions": {
                                 "ssl-target-name-override": "peer0.org2.example.com"
                         }
@@ -122,7 +122,7 @@
                         "tlsCACerts": {
                                 "path": "/tmp/crypto/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls/ca.crt"
                         },
-                        "url": "grpcs://127.0.0.1:10051",
+                        "url": "grpcs://172.18.0.8:10051",
                         "grpcOptions": {
                                 "ssl-target-name-override": "peer1.org2.example.com"
                         }
@@ -131,7 +131,7 @@
         },
         "certificateAuthorities": {
                 "ca.org1.example.com": {
-                        "url": "https://127.0.0.1:7054",
+                        "url": "https://172.18.0.2:7054",
                         "httpOptions": {
                                 "verify": false
                         },
@@ -142,7 +142,7 @@
 
                 },
                 "ca.org2.example.com": {
-                        "url": "https://127.0.0.1:8054",
+                        "url": "https://172.18.0.7:8054",
                         "httpOptions": {
                                 "verify": false
                         },

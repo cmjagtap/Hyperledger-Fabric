@@ -32,12 +32,19 @@ removeOrg2(){
         echo "Removing Org1 Peers"
         docker-compose -f ./org2/docker-compose-peer.yaml down -v
 }
+removeExplorer() {
+	echo "Removing explorer"
+	cd explorer
+	docker-compose down -v
+	cd ..
+}
 removeOrdererCA
 removeOrg1CA
 removeOrg2CA
 removeOrderers
 removeOrg1
 removeOrg2
+removeExplorer
 
 echo "Removing crypto CA material"
 rm -rf ./orderer/fabric-ca
@@ -54,4 +61,4 @@ rm -rf ./org1/mychannel.tx
 rm -rf ./org1/mychannel.block
 rm -rf ./org2/mychannel.tx
 rm -rf ./org2/mychannel.block
-
+rm -rf ./explorer/dockerConfig/crypto-config
