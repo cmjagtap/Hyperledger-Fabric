@@ -1,0 +1,13 @@
+{
+        "network-configs": {
+                "first-network": {
+                        "name": "Org1-network",
+                        "profile": "./connection-profile/org1-network.json"
+
+                }
+
+
+        },
+        "license": "Apache-2.0"
+}
+

@@ -1,0 +1,157 @@
+{
+        "name": "Org1-network",
+        "version": "2.0.0",
+        "client": {
+                "tlsEnable": true,
+                "adminCredential": {
+                        "id": "admin",
+                        "password": "adminpw"
+                },
+                "caCredential": {
+                        "id": "admin",
+                        "password": "adminpw"
+                },
+                "enableAuthentication": true,
+                "organization": "Org1MSP",
+                "connection": {
+                        "timeout": {
+                                "peer": {
+                                        "endorser": "300"
+                                },
+                                "orderer": "300"
+                        }
+                }
+        },
+        "channels": {
+                "mychannel": {
+                        "peers": {
+                                "peer0.org1.example.com": {},
+                                "peer1.org1.example.com": {},
+                                "peer0.org2.example.com": {},
+                                "peer1.org2.example.com": {}
+
+                        },
+                        "orderers": [
+                                "orderer.example.com",
+                                "orderer2.example.com",
+                                "orderer3.example.com"
+                        ],
+                        "connection": {
+                                "timeout": {
+                                        "peer": {
+                                                "endorser": "600",
+                                                "eventHub": "600",
+                                                "eventReg": "600"
+                                        }
+                                }
+                        }
+                }
+        },
+        "organizations": {
+                "Org1MSP": {
+                        "mspid": "Org1MSP",
+                        "peers": [ "peer0.org1.example.com", "peer1.org1.example.com" ],
+                        "certificateAuthorities": [ "ca.org1.example.com" ]
+                },
+                "Org2MSP": {
+                        "mspid": "Org2MSP",
+                        "peers": [ "peer0.org2.example.com", "peer1.org2.example.com" ],
+                        "certificateAuthorities": [ "ca.org2.example.com" ]
+                }
+        },
+        "orderers": {
+                "orderer.example.com": {
+                        "url": "grpcs://127.0.0.1:7050",
+                        "grpcOptions": {
+                                "ssl-target-name-override": "orderer.example.com",
+                                "hostnameOverride": "orderer.example.com"
+                        },
+                        "tlsCACerts": {
+                                "pem": "/tmp/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt"
+                        }
+                },
+                "orderer2.example.com": {
+                        "url": "grpcs://127.0.0.1:8050",
+                        "grpcOptions": {
+                                "ssl-target-name-override": "orderer2.example.com"
+
+                        },
+                        "tlsCACerts": {
+                                "pem": "/tmp/crypto/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/ca.crt"
+                        }
+                },
+                "orderer3.example.com": {
+                        "url": "grpcs://127.0.0.1:9050",
+                        "grpcOptions": {
+                                "ssl-target-name-override": "orderer3.example.com"
+                        },
+                        "tlsCACerts": {
+                                "pem": "/tmp/crypto/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/ca.crt"
+                        }
+                }
+        },
+        "peers": {
+                "peer0.org1.example.com": {
+                        "tlsCACerts": {
+                                "path": "/tmp/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
+                        },
+                        "url": "grpcs://127.0.0.1:7051",
+                        "grpcOptions": {
+                                "ssl-target-name-override": "peer0.org1.example.com"
+                        }
+                },
+                "peer1.org1.example.com": {
+                        "tlsCACerts": {
+                                "path": "/tmp/crypto/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt"
+                        },
+                        "url": "grpcs://127.0.0.1:8051",
+                        "grpcOptions": {
+                                "ssl-target-name-override": "peer1.org1.example.com"
+                        }
+                },
+                "peer0.org2.example.com": {
+                        "tlsCACerts": {
+                                "path": "/tmp/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt"
+                        },
+                        "url": "grpcs://127.0.0.1:9051",
+                        "grpcOptions": {
+                                "ssl-target-name-override": "peer0.org2.example.com"
+                        }
+                },
+                "peer1.org2.example.com": {
+                        "tlsCACerts": {
+                                "path": "/tmp/crypto/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls/ca.crt"
+                        },
+                        "url": "grpcs://127.0.0.1:10051",
+                        "grpcOptions": {
+                                "ssl-target-name-override": "peer1.org2.example.com"
+                        }
+                }
+
+        },
+        "certificateAuthorities": {
+                "ca.org1.example.com": {
+                        "url": "https://127.0.0.1:7054",
+                        "httpOptions": {
+                                "verify": false
+                        },
+                        "tlsCACerts": {
+                                "path": "/tmp/crypto/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem"
+                        },
+                        "caName": "ca.org1.example.com"
+
+                },
+                "ca.org2.example.com": {
+                        "url": "https://127.0.0.1:8054",
+                        "httpOptions": {
+                                "verify": false
+                        },
+                        "tlsCACerts": {
+                                "path": "/tmp/crypto/peerOrganizations/org2.example.com/ca/ca.org2.example.com-cert.pem"
+                        },
+                        "caName": "ca.org2.example.com"
+
+                }
+        }
+}
+
