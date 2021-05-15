@@ -37,7 +37,7 @@ services:
       - ORDERER_GENERAL_LOGLEVEL=info
       - CORE_PEER_LOCALMSPID=Org2MSP
 
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric20_test
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabricnet_test
 
       - CORE_PEER_ID=peer0.org2.example.com
       - CORE_PEER_ADDRESS=peer0.org2.example.com:9051
@@ -81,7 +81,7 @@ services:
       - ORDERER_GENERAL_LOGLEVEL=info
       - CORE_PEER_LOCALMSPID=Org2MSP
 
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric20_test
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabricnet_test
 
       - CORE_PEER_ID=peer1.org2.example.com
       - CORE_PEER_ADDRESS=peer1.org2.example.com:10051

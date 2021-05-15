@@ -3,7 +3,7 @@ sudo setenforce 0
 
 removeOrdererCA(){
 
-	echo "Removing Ordere CA"
+	echo "Removing Orderer CA"
 	docker-compose -f ./orderer/ca-orderer.yaml  down -v 
 
 }
@@ -62,3 +62,7 @@ rm -rf ./org1/mychannel.block
 rm -rf ./org2/mychannel.tx
 rm -rf ./org2/mychannel.block
 rm -rf ./explorer/dockerConfig/crypto-config
+rm -rf ./deployChaincode/*.tar.gz
+rm -rf ./deployChaincode/node_modules
+rm -rf ./deployChaincode/log.txt
+rm -rf ./deployChaincode/npm-debug.log
