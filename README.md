@@ -19,4 +19,6 @@ Monitoring using Grafana, Prometheus and REST APIS.
 - Follow this [Article](https://cmjagtap.medium.com/hyperledger-fabric-blockchain-setup-from-scratch-21890e26aac7) to setup test network from scratch.
 - Follow this [Article](https://cmjagtap.medium.com/how-to-deploy-chaincode-smart-contract-45c20650786a) to deploy JAVA, GO, JavaScript chaincodes.
 - Follow this [Article](https://cmjagtap.medium.com/integration-of-hyperledger-explorer-90240b271aaa) to integrate Hyperledger explorer.
+- Follow this [Article](https://cmjagtap.medium.com/monitoring-fabric-network-using-grafana-and-prometheus-78572bd883e7) to setup a Grafana and Prometheus for the fabric network monitoring.
+
 
