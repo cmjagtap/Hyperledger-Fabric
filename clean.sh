@@ -38,6 +38,12 @@ removeExplorer() {
 	docker-compose down -v
 	cd ..
 }
+removeGrafanaPrometheus(){
+	echo "Removing Grafana and Prometheus"
+	cd monitoring
+	docker-compose down -v
+	cd ..
+}
 removeOrdererCA
 removeOrg1CA
 removeOrg2CA
