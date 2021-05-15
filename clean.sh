@@ -51,7 +51,7 @@ removeOrderers
 removeOrg1
 removeOrg2
 removeExplorer
-
+removeGrafanaPrometheus
 echo "Removing crypto CA material"
 rm -rf ./orderer/fabric-ca
 rm -rf ./org1/fabric-ca
