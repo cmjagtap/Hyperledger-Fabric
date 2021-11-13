@@ -1,12 +1,13 @@
+#!/usr/bin/env bash
 
-setupOrg1CA(){
+setupOrg1CA() {
 
-	echo "Setting Org1 CA"
-	docker-compose -f ca-org1.yaml up -d 
+  echo "Setting Org1 CA"
+  docker-compose -f ca-org1.yaml up -d
 
-	sleep 10
-	mkdir -p crypto-config-ca/peerOrganizations/org1.example.com/
-	export FABRIC_CA_CLIENT_HOME=${PWD}/crypto-config-ca/peerOrganizations/org1.example.com/
+  sleep 10
+  mkdir -p crypto-config-ca/peerOrganizations/org1.example.com/
+  export FABRIC_CA_CLIENT_HOME=${PWD}/crypto-config-ca/peerOrganizations/org1.example.com/
 }
 
 #here we are generating crypto material insted of cryptogen we are using CA
@@ -16,10 +17,9 @@ createcertificatesForOrg1() {
   echo
 
   fabric-ca-client enroll -u https://admin:adminpw@localhost:7054 --caname ca.org1.example.com --tls.certfiles ${PWD}/fabric-ca/org1/tls-cert.pem
-   }
+}
 #Orgnisation units will be useful in future
-nodeOrgnisationUnit()
-{
+nodeOrgnisationUnit() {
   echo 'NodeOUs:
   Enable: true
   ClientOUIdentifier:
@@ -36,8 +36,7 @@ nodeOrgnisationUnit()
     OrganizationalUnitIdentifier: orderer' >${PWD}/crypto-config-ca/peerOrganizations/org1.example.com/msp/config.yaml
 
 }
-registerUsers()
-{
+registerUsers() {
   echo
   echo "Register peer0"
   echo
@@ -64,4 +63,3 @@ sleep 2
 nodeOrgnisationUnit
 sleep 2
 registerUsers
-

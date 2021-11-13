@@ -1,22 +1,22 @@
-setupOrdererCA(){
+#!/usr/bin/env bash
 
-	echo "Setting Orderer CA"
-	docker-compose -f ca-orderer.yaml  up -d
-	sleep 10
-	 mkdir -p crypto-config-ca/ordererOrganizations/example.com
- 	 export FABRIC_CA_CLIENT_HOME=${PWD}/crypto-config-ca/ordererOrganizations/example.com
+setupOrdererCA() {
+
+  echo "Setting Orderer CA"
+  docker-compose -f ca-orderer.yaml up -d
+  sleep 10
+  mkdir -p crypto-config-ca/ordererOrganizations/example.com
+  export FABRIC_CA_CLIENT_HOME=${PWD}/crypto-config-ca/ordererOrganizations/example.com
 }
-enrollCAAdmin()
-{
+enrollCAAdmin() {
   echo
   echo "Enroll the CA admin"
   echo
 
   fabric-ca-client enroll -u https://admin:adminpw@localhost:9054 --caname ca-orderer --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
- sleep 2
+  sleep 2
 }
-nodeOrgnisationUnit()
-{
+nodeOrgnisationUnit() {
   echo 'NodeOUs:
   Enable: true
   ClientOUIdentifier:
@@ -33,8 +33,7 @@ nodeOrgnisationUnit()
     OrganizationalUnitIdentifier: orderer' >${PWD}/crypto-config-ca/ordererOrganizations/example.com/msp/config.yaml
   sleep 2
 }
-registerUsers()
-{
+registerUsers() {
   echo
   echo "Register orderer"
   echo
@@ -66,8 +65,7 @@ registerUsers()
   mkdir -p crypto-config-ca/ordererOrganizations/example.com/orderers
 
 }
-orderer1MSP()
-{
+orderer1MSP() {
 
   mkdir -p crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com
 
@@ -100,8 +98,7 @@ orderer1MSP()
   cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
 }
-orderer2MSP()
-{
+orderer2MSP() {
   # -----------------------------------------------------------------------
   #  Orderer 2
 
@@ -134,9 +131,8 @@ orderer2MSP()
   # cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
 }
-orderer3MSP()
-{
- # ---------------------------------------------------------------------------
+orderer3MSP() {
+  # ---------------------------------------------------------------------------
   #  Orderer 3
   mkdir -p crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com
 
@@ -146,7 +142,7 @@ orderer3MSP()
 
   fabric-ca-client enroll -u https://orderer3:ordererpw@localhost:9054 --caname ca-orderer -M ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/msp --csr.hosts orderer3.example.com --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
 
-  sleep  2
+  sleep 2
   cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/msp/config.yaml ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/msp/config.yaml
 
   echo
@@ -155,7 +151,7 @@ orderer3MSP()
 
   fabric-ca-client enroll -u https://orderer3:ordererpw@localhost:9054 --caname ca-orderer -M ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/tls --enrollment.profile tls --csr.hosts orderer3.example.com --csr.hosts localhost --tls.certfiles ${PWD}/fabric-ca/ordererOrg/tls-cert.pem
 
- sleep 2
+  sleep 2
   cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/ca.crt
   cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/signcerts/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.crt
   cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/keystore/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/server.key
@@ -164,8 +160,7 @@ orderer3MSP()
   cp ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/tls/tlscacerts/* ${PWD}/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer3.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
 }
-adminMSP()
-{
+adminMSP() {
   mkdir -p crypto-config-ca/ordererOrganizations/example.com/users
   mkdir -p crypto-config-ca/ordererOrganizations/example.com/users/Admin@example.com
 
@@ -187,4 +182,3 @@ orderer1MSP
 orderer2MSP
 orderer3MSP
 adminMSP
-

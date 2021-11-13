@@ -24,10 +24,9 @@ trap finish EXIT
 
 pushd "$TMP"
 mkdir -p grpc/binarylog/grpc_binarylog_v1
-curl https://raw.githubusercontent.com/grpc/grpc-proto/master/grpc/binlog/v1/binarylog.proto > grpc/binarylog/grpc_binarylog_v1/binarylog.proto
+curl https://raw.githubusercontent.com/grpc/grpc-proto/master/grpc/binlog/v1/binarylog.proto >grpc/binarylog/grpc_binarylog_v1/binarylog.proto
 
 protoc --go_out=plugins=grpc,paths=source_relative:. -I. grpc/binarylog/grpc_binarylog_v1/*.proto
 popd
 rm -f ./grpc_binarylog_v1/*.pb.go
 cp "$TMP"/grpc/binarylog/grpc_binarylog_v1/*.pb.go ../../binarylog/grpc_binarylog_v1/
-

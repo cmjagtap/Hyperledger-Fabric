@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # System channel
 SYS_CHANNEL="sys-channel"
 
@@ -7,8 +9,7 @@ CHANNEL_NAME="mychannel"
 echo $CHANNEL_NAME
 
 # Generate System Genesis block
-configtxgen -profile OrdererGenesis -configPath . -channelID $SYS_CHANNEL  -outputBlock ./genesis.block
-
+configtxgen -profile OrdererGenesis -configPath . -channelID $SYS_CHANNEL -outputBlock ./genesis.block
 
 # Generate channel configuration block
 configtxgen -profile BasicChannel -configPath . -outputCreateChannelTx ./mychannel.tx -channelID $CHANNEL_NAME
@@ -19,10 +20,8 @@ configtxgen -profile BasicChannel -configPath . -outputAnchorPeersUpdate ../org1
 echo "#######    Generating anchor peer update for Org2MSP  ##########"
 configtxgen -profile BasicChannel -configPath . -outputAnchorPeersUpdate ../org2/Org2MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org2MSP
 
-
 sleep 2
 
 docker-compose -f docker-compose-orderer.yaml up -d
 
 docker ps -a
-

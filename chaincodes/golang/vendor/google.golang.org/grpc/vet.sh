@@ -1,12 +1,12 @@
 #!/bin/bash
 
-if [[ `uname -a` = *"Darwin"* ]]; then
+if [[ $(uname -a) = *"Darwin"* ]]; then
   echo "It seems you are running on Mac. This script does not work on Mac. See https://github.com/grpc/grpc-go/issues/2047"
   exit 1
 fi
 
-set -ex  # Exit on error; debugging enabled.
-set -o pipefail  # Fail a pipe if any sub-command fails.
+set -ex         # Exit on error; debugging enabled.
+set -o pipefail # Fail a pipe if any sub-command fails.
 
 die() {
   echo "$@" >&2
@@ -30,7 +30,7 @@ PATH="${GOPATH}/bin:${GOROOT}/bin:${PATH}"
 
 if [[ "$1" = "-install" ]]; then
   # Check for module support
-  if go help mod >& /dev/null; then
+  if go help mod >&/dev/null; then
     go install \
       golang.org/x/lint/golint \
       golang.org/x/tools/cmd/goimports \
@@ -57,7 +57,7 @@ if [[ "$1" = "-install" ]]; then
       unzip ${PROTOC_FILENAME}
       bin/protoc --version
       popd
-    elif ! which protoc > /dev/null; then
+    elif ! which protoc >/dev/null; then
       die "Please install protoc into your path"
     fi
   fi
@@ -92,16 +92,24 @@ go vet -all .
 
 # - Check that generated proto files are up to date.
 if [[ -z "${VET_SKIP_PROTO}" ]]; then
-  PATH="/home/travis/bin:${PATH}" make proto && \
-    git status --porcelain 2>&1 | fail_on_output || \
-    (git status; git --no-pager diff; exit 1)
+  PATH="/home/travis/bin:${PATH}" make proto &&
+    git status --porcelain 2>&1 | fail_on_output ||
+    (
+      git status
+      git --no-pager diff
+      exit 1
+    )
 fi
 
 # - Check that our module is tidy.
-if go help mod >& /dev/null; then
-  go mod tidy && \
-    git status --porcelain 2>&1 | fail_on_output || \
-    (git status; git --no-pager diff; exit 1)
+if go help mod >&/dev/null; then
+  go mod tidy &&
+    git status --porcelain 2>&1 | fail_on_output ||
+    (
+      git status
+      git --no-pager diff
+      exit 1
+    )
 fi
 
 # - Collection of static analysis checks

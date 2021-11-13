@@ -2,7 +2,7 @@
 
 set -xe
 
-cat >> .env << EOF
+cat >>.env <<EOF
 # This is a comment
 # We can use equal or colon notation
 DIR: root
