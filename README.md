@@ -9,7 +9,7 @@ This repository contains a Hyperledger fabric blokchain setup from scratch.
 
 #### Export Fabric Binary path 
 
-- export PATH=${PWD}/bin:$PATH
+- export PATH=${PWD}/bin:$PATH 
 - Note : please verify your PWD is Hyperledger-Fabric
 
 
@@ -19,5 +19,7 @@ This repository contains a Hyperledger fabric blokchain setup from scratch.
 - Follow this [Article](https://cmjagtap.medium.com/how-to-deploy-chaincode-smart-contract-45c20650786a) to deploy JAVA, GO, JavaScript chaincodes.
 - Follow this [Article](https://cmjagtap.medium.com/integration-of-hyperledger-explorer-90240b271aaa) to integrate Hyperledger explorer.
 - Follow this [Article](https://cmjagtap.medium.com/monitoring-fabric-network-using-grafana-and-prometheus-78572bd883e7) to setup a Grafana and Prometheus for the fabric network monitoring.
+- Follow this [Article](https://cmjagtap.medium.com/remove-org-from-running-hypeledger-fabric-blockchain-744bdd05511b) to remove existing organization from blockchain network.
+- 
 
 
