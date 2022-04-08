@@ -1,0 +1,55 @@
+test:
+  workers:
+    type: local
+    number: 1
+  rounds:
+    - label: Query all cars. 
+      txDuration: 30  #transaction duration 
+      rateControl:
+          type: fixed-load
+          opts:
+            tps: 5 #with  of 5 TPS
+      workload:
+        module: benchmarks/scenario/simple/fabcar/queryAllCars.js
+        arguments:
+          assets: 10
+          startKey: '1'
+          endKey: '50'
+    - label: Query a car.
+      txDuration: 10
+      rateControl:
+          type: fixed-load
+          opts:
+            transactionLoad: 5
+      workload:
+        module: benchmarks/scenario/simple/fabcar/queryCar.js
+        arguments:
+          assets: 10
+    - label: Create a car.
+      txDuration: 30
+      rateControl:
+          type: fixed-load
+          opts:
+            transactionLoad: 5
+      workload:
+        module: benchmarks/scenario/simple/fabcar/createCar.js
+monitors:
+  resource:
+  - module: docker
+    options:
+      interval: 5 
+      containers:
+      - all
+    charting:
+      bar:
+        metrics: [Memory(avg), CPU%(avg)]
+      polar:
+        metrics: [all]
+  - module: process
+    options:
+      interval: 3
+      processes: [{ command: 'node', arguments: 'caliper', multiOutput: 'avg' }]
+    charting:
+      bar:
+        metrics: [all]
+
