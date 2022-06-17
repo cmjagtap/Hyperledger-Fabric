@@ -2,7 +2,7 @@
 
 registerPeer() {
   echo
-  echo "Register peer0"
+  echo "Register peer2"
   echo
   fabric-ca-client register --caname ca.org1.example.com --id.name peer2 --id.secret peer2pw --id.type peer --tls.certfiles ${PWD}/../fabric-ca/org1/tls-cert.pem
 
