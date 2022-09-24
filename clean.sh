@@ -74,3 +74,4 @@ rm -rf ./deployChaincode/*.tar.gz
 rm -rf ./deployChaincode/node_modules
 rm -rf ./deployChaincode/log.txt
 rm -rf ./deployChaincode/npm-debug.log
+rm -rf ./revokeIdentity/config*  ./revokeIdentity/modi* ./revokeIdentity/base64Cert
