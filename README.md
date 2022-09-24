@@ -23,4 +23,4 @@ This repository contains a Hyperledger fabric blokchain setup from scratch.
 - Follow this [Article](https://cmjagtap.medium.com/caliper-integration-in-hyperledger-fabric-blockchain-5762c1e8b241) to integrate Hyperledger Caliper and  benchmark fabric network.
 - Follow this [Article](https://cmjagtap.medium.com/onboarding-new-peer-in-running-organization-6d378264b31e) to onboard new peer into running organization in the Hyperledger Fabric network.
 - Follow this [Article](https://cmjagtap.medium.com/hyperledger-fabric-block-configuration-5cd6281f7215) to configure/modify block cutting settings.
-
+- Follow this [Article](https://cmjagtap.medium.com/revoke-identity-in-hyperledgr-fabric-5aab09caa15c) to revoke identity from HLF network.
